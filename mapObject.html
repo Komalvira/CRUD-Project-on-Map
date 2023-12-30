@@ -1,0 +1,72 @@
+<html>
+<head>
+<title>Map Example</title>
+<script>
+      let mobj=new Map();
+         function save_stu(){
+            let status=document.getElementById('status')
+           mobj.set(k.value,v.value)
+            status.innerHTML='Record Inserted!('+mobj.size+")";
+          show();
+        }
+      
+       function show(){
+            if(mobj.size!=0){
+            let data="<table border='1'>";
+            data+="<tr><th>Key</th><th>Value</th><th>Action</th></tr>";
+            mobj.forEach(function(v,k){
+                data+="<tr><td>"+k+"</td><td>"+v+"</td><td><a href=javascript:del_stu('"+k+"')>Delete</a>||<a href=javascript:edit_stu('"+k+"','"+v+"')>Edit</a></td></tr>"
+                })
+                data+="</table>";
+                document.getElementById('result').innerHTML=data;
+            }
+            else{
+                document.getElementById('result').innerHTML='No record found';
+            }
+        }
+        function del_stu(k){
+            let status=document.getElementById('status')
+               mobj.delete(k)
+               status.innerHTML='Record is deleted';
+               show()
+        }
+        function edit_stu(a,b){
+            let status=document.getElementById('status')
+             k.value=a;
+             v.value=b;
+                if(a.value!=""&&b.value!=""){
+                    if(mobj.has(a.value)){
+               mobj.set(k.value,v.value);
+               status.innerHTML='Record is update';
+                    }
+                }
+               show();
+             }
+       
+		function delete_all(){
+            let status=document.getElementById('status')
+            mobj.clear();
+            status.innerHTML='All record is delete';
+               show();
+        }
+		
+	function Clear_Fill(){
+        k.value="";
+        v.value="";
+    }
+
+</script>
+</head>
+<body>
+<center>
+<h4>Map Crud Project</h4>
+Key:<input type="text" id="k" name="k"/><br/>
+Value:<input type="text" id="v" name="v"/><br/>
+<input type="button" value="Save"  onclick="save_stu()"/>
+<input type="reset" value="Clear" onclick="Clear_Fill()"/>
+<input type="button" value="DeleteAll" onclick="delete_all()"/>
+<div id="status" style="color:#FF0000;"></div>
+<div id="result"></div>
+</center>
+</body>
+</html>
